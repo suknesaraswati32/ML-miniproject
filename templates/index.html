@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCart | Customer Segmentation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(30, 41, 59, 0.12);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #4338ca;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            color: #4338ca;
+            font-size: 18px;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            color: #334155;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 28px;
+            padding: 15px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            background: #eef2ff;
+            color: #3730a3;
+            overflow-wrap: anywhere;
+        }
+
+        .result h2 {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <h1>🛒 SmartCart</h1>
+            <p>Customer Segmentation System</p>
+            <p>Discover customer groups using machine learning.</p>
+        </div>
+
+        <form action="/predict" method="POST">
+
+            <h2 class="section-title">Customer Information</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="income">Annual Income</label>
+                    <input type="number" id="income" name="Income"
+                           min="0" step="any" required
+                           placeholder="e.g. 50000">
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="Age"
+                           min="18" max="100" required
+                           placeholder="e.g. 30">
+                </div>
+
+                <div class="form-group">
+                    <label for="education">Education</label>
+                    <select id="education" name="Education" required>
+                        <option value="">Select education</option>
+                        <option value="Undergraduate">Undergraduate</option>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Postgraduate">Postgraduate</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="living">Living With</label>
+                    <select id="living" name="Living_with" required>
+                        <option value="">Select status</option>
+                        <option value="Partner">Partner</option>
+                        <option value="Alone">Alone</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="children">Total Children</label>
+                    <input type="number" id="children" name="Total_Children"
+                           min="0" max="20" required
+                           placeholder="e.g. 2">
+                </div>
+
+                <div class="form-group">
+                    <label for="tenure">Customer Tenure (days)</label>
+                    <input type="number" id="tenure" name="Customer_Tenure_Days"
+                           min="0" required
+                           placeholder="e.g. 500">
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Shopping Behaviour</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="recency">Recency (days)</label>
+                    <input type="number" id="recency" name="Recency"
+                           min="0" required
+                           placeholder="e.g. 20">
+                </div>
+
+                <div class="form-group">
+                    <label for="spending">Total Spending</label>
+                    <input type="number" id="spending" name="Total_Spending"
+                           min="0" step="any" required
+                           placeholder="e.g. 1200">
+                </div>
+
+                <div class="form-group">
+                    <label for="webvisits">Website Visits per Month</label>
+                    <input type="number" id="webvisits" name="NumWebVisitsMonth"
+                           min="0" required placeholder="e.g. 5">
+                </div>
+
+                <div class="form-group">
+                    <label for="webpurchases">Website Purchases</label>
+                    <input type="number" id="webpurchases" name="NumWebPurchases"
+                           min="0" required placeholder="e.g. 4">
+                </div>
+
+                <div class="form-group">
+                    <label for="catalog">Catalog Purchases</label>
+                    <input type="number" id="catalog" name="NumCatalogPurchases"
+                           min="0" required placeholder="e.g. 2">
+                </div>
+
+                <div class="form-group">
+                    <label for="deals">Deals Purchases</label>
+                    <input type="number" id="deals" name="NumDealsPurchases"
+                           min="0" required placeholder="e.g. 3">
+                </div>
+
+                <div class="form-group">
+                    <label for="store">Store Purchases</label>
+                    <input type="number" id="store" name="NumStorePurchases"
+                           min="0" required placeholder="e.g. 6">
+                </div>
+
+                <div class="form-group">
+                    <label for="response">Previous Campaign Response</label>
+                    <select id="response" name="Response" required>
+                        <option value="">Select response</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="complain">Customer Complaint</label>
+                    <select id="complain" name="Complain" required>
+                        <option value="">Select option</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit">Analyze Customer Segment</button>
+
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">
+            <h2>Analysis Result</h2>
+            <p>{{ prediction_text }}</p>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            Powered by Python, Flask and Machine Learning
+        </div>
+
+    </div>
+</body>
+</html>
